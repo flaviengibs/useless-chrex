@@ -9,10 +9,10 @@
     "tabs"
  ],
  "browser_action": {   
-  "default_icon" : "icon.png",
+  "default_icon" : "apple.png",
   "default_popup": "popup.html" // 
  },
  "icons": { 
-  "128" : "icon_128.png" 
+  "128" : "apple.png" 
  }
 }
