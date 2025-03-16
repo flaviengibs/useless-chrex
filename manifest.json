@@ -1,5 +1,5 @@
 {
- "manifest_version": 2, 
+ "manifest_version": 3, 
  "name": "Chrome Extension for silly guys", 
  "description": "Check my github : github.com/flaviengibs", 
  "version": "1.0", 
