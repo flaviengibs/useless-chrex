@@ -3,8 +3,23 @@ document.addEventListener('DOMContentLoaded', function() {
   let statusText = document.getElementById('status');
 
   function updateUI(isDarkMode) {
-    toggleButton.textContent = isDarkMode ? 'Désactiver' : 'Activer';
-    statusText.textContent = `Statut : ${isDarkMode ? 'Activé' : 'Désactivé'}`;
+    toggleButton.textContent = isDarkMode ? 'Disable' : 'Enable';
+    statusText.textContent = `Statut : ${isDarkMode ? 'Active' : 'Inactive'}`;
+  }
+
+  function toggleDarkMode(enable) {
+    let code = enable
+      ? `document.body.style.backgroundColor = "#121212"; document.body.style.color = "#ffffff";`
+      : `document.body.style.backgroundColor = ""; document.body.style.color = "";`;
+
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      if (tabs.length > 0) {
+        chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          function: new Function(code)
+        });
+      }
+    });
   }
 
   chrome.storage.sync.get(['darkMode'], function(result) {
@@ -16,14 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let newMode = !result.darkMode;
       chrome.storage.sync.set({ darkMode: newMode }, function() {
         updateUI(newMode);
-        chrome.tabs.query({}, (tabs) => {
-          tabs.forEach(tab => {
-            chrome.scripting.executeScript({
-              target: { tabId: tab.id },
-              function: newMode ? applyDarkMode : removeDarkMode
-            });
-          });
-        });
+        toggleDarkMode(newMode);
       });
     });
   });
