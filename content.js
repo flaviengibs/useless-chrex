@@ -9,3 +9,17 @@ function applyDarkMode() {
     a { color: #bb86fc !important; }
   `;
   document.head.appendChild(style);
+}
+
+function removeDarkMode() {
+  let style = document.getElementById('dark-mode-style');
+  if (style) style.remove();
+}
+
+// Vérifie si le mode sombre est activé dans le stockage Chrome
+chrome.storage.sync.get(['darkMode'], function(result) {
+  if (result.darkMode) {
+    applyDarkMode();
+  }
+});
+
