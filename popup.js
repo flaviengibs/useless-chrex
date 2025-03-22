@@ -3,20 +3,24 @@ document.addEventListener('DOMContentLoaded', function() {
   let statusText = document.getElementById('status');
 
   function updateUI(isDarkMode) {
-    toggleButton.textContent = isDarkMode ? 'Disable' : 'Enable';
-    statusText.textContent = `Statut : ${isDarkMode ? 'Active' : 'Inactive'}`;
+    toggleButton.textContent = isDarkMode ? 'Désactiver' : 'Activer';
+    statusText.textContent = `Statut : ${isDarkMode ? 'Activé' : 'Désactivé'}`;
   }
 
   function toggleDarkMode(enable) {
-    let code = enable
-      ? `document.body.style.backgroundColor = "#121212"; document.body.style.color = "#ffffff";`
-      : `document.body.style.backgroundColor = ""; document.body.style.color = "";`;
-
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
       if (tabs.length > 0) {
         chrome.scripting.executeScript({
           target: { tabId: tabs[0].id },
-          function: new Function(code)
+          func: enable
+            ? () => {
+                document.body.style.backgroundColor = "#121212";
+                document.body.style.color = "#ffffff";
+              }
+            : () => {
+                document.body.style.backgroundColor = "";
+                document.body.style.color = "";
+              }
         });
       }
     });
