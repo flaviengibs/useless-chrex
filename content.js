@@ -21,5 +21,7 @@ chrome.storage.sync.get(['darkMode'], function(result) {
   if (result.darkMode) {
     applyDarkMode();
   }
+  else {
+    removeDarkMode(); // Ensure this function is called to remove dark mode if not active
+  }
 });
-
