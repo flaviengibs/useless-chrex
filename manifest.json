@@ -1,18 +1,20 @@
 {
- "manifest_version": 3, 
- "name": "Chrome Extension for silly guys", 
- "description": "Check my github : github.com/flaviengibs", 
- "version": "1.0", 
- "permissions": [ 
-  "http://*/*",
-  "https://*/*",
-    "tabs"
- ],
- "browser_action": {   
-  "default_icon" : "apple.png",
-  "default_popup": "popup.html" // 
- },
- "icons": { 
-  "128" : "apple.png" 
- }
+  "manifest_version": 3,
+  "name": "Mode Sombre Auto",
+  "version": "1.0",
+  "description": "Active le mode sombre après 19h",
+  "permissions": ["storage", "scripting", "tabs"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
 }
