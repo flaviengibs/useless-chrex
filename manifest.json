@@ -16,5 +16,8 @@
       "js": ["content.js"],
       "run_at": "document_end"
     }
-  ]
+  ],
+  "icons": { 
+      "128" : "img/apple.png.png" 
+  }
 }
